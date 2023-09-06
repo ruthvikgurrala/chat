@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Chatbox</title>
+</head>
+<body>
+    <div class="header">
+        <!-- Your existing logout button -->
+        <div id="username-display" class="username-display"></div>
+        <button id="logout-button" class="logout-button">Logout</button>
+    </div>
+    <div class="chat-container">
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="input-container">
+            <!-- Use a hidden input field to store the retrieved username -->
+            <input type="hidden" id="user-name" value="">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button id="send-button">Send</button>
+            
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        // Retrieve the username from localStorage and set it in the input field
+        const retrievedUsername = localStorage.getItem("currentUsername");
+        const userMessages = document.getElementById("chat-messages");
+
+        if (retrievedUsername) {
+            const userNameInput = document.getElementById("user-name");
+            userNameInput.value = retrievedUsername;
+        }
+        // Check if the user is authenticated
+        const currentUsername = sessionStorage.getItem("currentUsername");
+        if (!currentUsername) {
+            // If not authenticated, redirect to login page
+            window.location.href = "login.html";
+        }
+        // Add event listener for the logout button
+        const logoutButton = document.getElementById("logout-button");
+        if (logoutButton) {
+            logoutButton.addEventListener("click", () => {
+                // Clear the session storage and redirect to the login page
+                sessionStorage.removeItem("currentUsername");
+                window.location.href = "login.html";
+            });
+        }
+        
+    </script>
+</body>
+</html>
